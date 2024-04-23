@@ -1,25 +1,45 @@
-// API REST
-// Utiliza peticiones http (GET, POST, PUT, DELETE)
-// Operaciones CRUD (Create, Read, Update, Delete)
-// En general se utiliza para transferir informacion el JSON o XML
-
-// index.js: Levantar el servidor y realizar configuraciones principales
-
-// Express: framework de node.js
-
-// importacion de express
 import express from "express";
+import { products } from "./api/db/products.js";
 
-// crear nuestra app de express
+// Instancia de una app de express
 const app = express();
 
-// localhost (IP: 127.0.0.1)
-// http://localhost:<puerto>
+// Rutas: endpoints (URLs)
+// req: request, res: response
+// Metodo GET
+app.get("/products", (req, res) => {
+  const { limit } = req.query;
+  // JSON
+  res.status(200).json(products);
+});
 
-// puerto (direccion numerica a la cual se le asigna un proceso)
+// parametro obligatorios
+app.get("/products/:id", (req, res) => {
+  const { id } = req.params;
+  const productFinded = products.find((prod) => prod.id == id);
+  res.status(200).json(productFinded);
+});
+
+// Metodo POST
+app.post("/products", (req, res) => {
+  res.send("Se creo un producto");
+});
+
+// Metodo PUT
+app.put("/products", (req, res) => {
+  res.send("Actualizacion de un producto");
+});
+
+// Metodo DELETE
+app.delete("/products/:id", (req, res) => {
+  const { id } = req.params;
+  res.send(`Se elimino el elemento ${id}`);
+});
+
+// Puerto
 const PORT = 8080;
 
-// levantando servidor
+// Servidor en escucha
 app.listen(PORT, () => {
   console.info(`Servidor escuchando en http://localhost:${PORT}`);
 });
