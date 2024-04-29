@@ -1,25 +1,21 @@
-// API REST
-// Utiliza peticiones http (GET, POST, PUT, DELETE)
-// Operaciones CRUD (Create, Read, Update, Delete)
-// En general se utiliza para transferir informacion el JSON o XML
-
-// index.js: Levantar el servidor y realizar configuraciones principales
-
-// Express: framework de node.js
-
-// importacion de express
 import express from "express";
+import productsRouter from "./api/routes/products.routes.js";
+import usersRouter from "./api/routes/users.routes.js";
 
-// crear nuestra app de express
+// Instancia de una app de express
 const app = express();
 
-// localhost (IP: 127.0.0.1)
-// http://localhost:<puerto>
+// configurar peticiones con json
+app.use(express.json());
 
-// puerto (direccion numerica a la cual se le asigna un proceso)
+// configuracion de rutas
+app.use("/products", productsRouter); // products
+app.use("/users", usersRouter); // users
+
+// Puerto
 const PORT = 8080;
 
-// levantando servidor
+// Servidor en escucha
 app.listen(PORT, () => {
   console.info(`Servidor escuchando en http://localhost:${PORT}`);
 });
